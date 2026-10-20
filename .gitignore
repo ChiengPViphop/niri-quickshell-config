@@ -1,0 +1,8 @@
+# Editor / OS noise
+.DS_Store
+*~
+*.swp
+
+# niri config backups and local bundles
+*.bak-*
+*.tar.gz

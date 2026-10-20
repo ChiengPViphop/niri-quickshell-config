@@ -1,0 +1,34 @@
+// Blur tuning. niri's defaults are passes 3 / offset 3, which is a very heavy
+// blur; this keeps the content behind recognisable.
+blur {
+    passes 2
+    offset 1.5
+}
+
+// The app launcher and the polkit dialog ask for background blur themselves via
+// ext-background-effect, and get their own layer namespaces so this rule targets
+// them alone — the bar's other popups (volume, network, menus, settings) stay
+// unblurred.
+//
+// `xray false` is the important bit: xray (the default with any effect active)
+// blurs only the *wallpaper*, which is a flat colour here, so it comes out as a
+// featureless wash. Non-xray blurs what is actually behind the surface.
+layer-rule {
+    match namespace="^quickshell-(launcher|polkit)$"
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Animation settings.
+// The wiki explains how to configure individual animations:
+// https://niri-wm.github.io/niri/Configuration:-Animations
+animations {
+    // Uncomment to turn off all animations.
+    // off
+
+    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    // slowdown 3.0
+}

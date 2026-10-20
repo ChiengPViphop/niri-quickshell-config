@@ -1,0 +1,22 @@
+hotkey-overlay {
+    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
+    skip-at-startup
+}
+
+// Ask clients to omit their client-side decorations. niri never draws title bars
+// itself, so this is the only niri-side lever: clients that negotiate
+// server-side decorations (or that treat CSD as optional) end up with no title
+// bar at all. Clients that insist on CSD (libadwaita apps, browsers, egui/Qt
+// apps with a custom header) keep drawing their own bar.
+// This also stops rounded corners on tiled windows and fixes border/focus ring
+// drawing behind semitransparent windows.
+// Restart apps after toggling this for it to fully apply.
+prefer-no-csd
+
+// You can change the path where screenshots are saved.
+// A ~ at the front will be expanded to the home directory.
+// The path is formatted with strftime(3) to give you the screenshot date and time.
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// You can also set this to null to disable saving screenshots to disk.
+// screenshot-path null

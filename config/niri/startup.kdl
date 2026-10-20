@@ -1,0 +1,31 @@
+// Environment for everything niri spawns. Adwaita is needed by the quickshell
+// bar: symbolic icons such as fcitx's `input-keyboard-symbolic` only exist
+// there, and with no icon theme configured the Qt platform theme falls back to
+// hicolor, so the tray would show a placeholder instead.
+environment {
+    QS_ICON_THEME "Adwaita"
+    // Default terminal emulator for niri-spawned apps and everything they
+    // launch (also exposed to systemd/DBus via environment.d).
+    TERMINAL "wezterm"
+    // GUI apps inherit niri's PATH, not the fish config. Include ~/.local/bin
+    // so xdg-terminal-exec (and lazygit, tree-sitter, ...) resolve.
+    PATH "/home/chiengpviphop/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin"
+}
+
+// This line starts waybar, a commonly used bar for Wayland compositors.
+// Disabled in favour of the quickshell bar in ~/.config/quickshell.
+// spawn-at-startup "waybar"
+
+// Quickshell top bar (config: ~/.config/quickshell). `-n` avoids starting a
+// second copy if one is already running.
+spawn-at-startup "qs" "-n"
+
+// Feed the bar's clipboard history. Needs wl-clipboard and cliphist:
+//   sudo pacman -S wl-clipboard cliphist
+// cliphist only keeps what it is fed, so without this the list stays empty.
+// The pgrep guard (matching the process name, not the command line) keeps a
+// niri restart from starting a second watcher, which would double-store entries.
+spawn-sh-at-startup "pgrep -x wl-paste >/dev/null || wl-paste --watch cliphist store"
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
