@@ -1,8 +1,5 @@
 # niri + quickshell config bundle
 
-Copied from `cachyos-x8664` on 2026-10-20. Contains **only** `~/.config/niri`
-and `~/.config/quickshell`.
-
 ## Install
 
 ```sh
